@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Liste des tâches {% endblock %}
+
+{% block body %}
+    <style>
+        ul a { text-decoration: none; color: black;}
+        ul a:hover li { background-color: lightgrey;}
+    </style>
+    <div class="col-md-4 offset-md-2 left-column mb-1">
+        <ul class="list-group">
+            {% for item in listings %}
+            <a href="{{path('listing_show', {'listingId' : item.id})}}" style="text-decoration: none;">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{item.name}}                    
+                </li>  
+            </a>          
+            {% endfor %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <form method="post" action="{{ path('listing_create') }}">
+                    <div class="input-group">
+                        <input type="text" placeholder="Ajouter une liste" class="form-control input-block-level" name="name">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-outline-primary">
+                                <i class="fa fa-yin-yang"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </li>
+        </ul>
+    </div>
+
+    <div class="col-md-5 list mb-1">        
+        {% if not currentListing %}
+            <h5>Pas de liste existante</h5>
+            <p>Vous pouvez créer une nouvelle liste par le biais du formulaire ci-contre</p>
+        {% else %}
+            <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
+                <a class="navbar-brand" href="#">{{currentListing.name}}</a>
+                <div>
+                    <form>
+                        <a href="{{path ('task_create', {'listingId' : currentListing.id})}}">
+                            <button class="btn btn-outline-info" type="button">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </a>
+                        <a href="{{path('listing_remove' , {'listingId' : currentListing.id})}}" >
+                            <button class="btn btn-outline-danger" type="button">
+                                <i class="fa fa-trash-alt"></i>
+                            </button>
+                        </a>
+                    </form>
+                </div>
+            </nav>
+            
+            <div class="row px-4 mt-3">
+                {% if currentListing.tasks|length %}
+                    <table class="table table-striped">
+                        {% for task in currentListing.tasks %}                        
+                            <tr>
+                                <td class="d-flex justify-content-between">
+                                    <a href="#">{{ task.name }}</a>
+                                    <a href="{{path('task_remove' , {'listingId' : currentListing.id ,
+                                                                     'taskId' : task.id})}}" >
+                                        <button class="btn btn-outline-danger btn-sm">
+                                            <i class="fa fa-trash-alt"></i>
+                                        </button>
+                                    </a>
+                                </td>
+                            </tr>                        
+                        {% endfor %}
+                    </table>            
+                {% else %}
+                    <h5>Aucune tâche existante pour cette liste</h5>
+                    <p>Vous pouvez ajouter des tâches par le biais du formulaire, en cliquant sur le bouton <i class="fa fa-plus"></i> </p>
+                {% endif %}
+            </div>
+        {% endif %}        
+    </div>
+{% endblock %}
+
