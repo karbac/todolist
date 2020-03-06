@@ -101,7 +101,7 @@ class Task
     /**
      * @return mixed
      */
-    public function getDueDate(): ?DateTime
+    public function getDueDate()
     {
         return $this->dueDate;
     }
@@ -109,13 +109,13 @@ class Task
     /**
      * @param mixed $dueDate
      */
-    public function setDueDate(DateTime $dueDate): self
+    public function setDueDate($dueDate): self
     {
         $this->dueDate = $dueDate;
 
         return $this;
     }
-
+    
     /**
      * @return mixed
      */

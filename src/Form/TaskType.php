@@ -24,14 +24,19 @@ class TaskType extends AbstractType {
             ])
             ->add('dueDate', DateTimeType::class , [
                 'label' => 'Date limite',
-                'required' => false
+                'required' => false,
+                'widget' => 'single_text',
+                'html5' => false,
+                'format' => 'MM/dd/yyyy hh:mm a',
+                'attr' => [
+                    'class' => 'form-control input-inline datetimepicker'
+                ]
             ])
             ->add('reminder', NumberType::class, [
                 'label' => 'Rappel (en minutes)',
                 'required' => false
             ])
-            ->add('Ajouter', SubmitType::class)
-            
+            ->add('Ajouter', SubmitType::class)            
         ;
     }
 }
