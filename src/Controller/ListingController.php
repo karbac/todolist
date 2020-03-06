@@ -46,7 +46,7 @@ class ListingController extends AbstractController{
         try {    
             $em->persist($listing);
             $em->flush();
-            $this->addFlash('success', "La liste « $name » a bien été créée");
+            $this->addFlash('success', "La liste « $name » a bien créée avec succès");
         } catch (UniqueConstraintViolationException $e) {
             $this->addFlash('warning',"La liste « $name » existe déjà");
         } finally {
