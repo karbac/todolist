@@ -20,6 +20,7 @@ class TaskController extends AbstractController {
      */
     public function create($listingId, EntityManagerInterface $em, Request $req){
         $listing = $em->find(Listing::class, $listingId);
+        $listingName = $listing->getName();
         if(empty($listing)) {
             $this->addFlash('warning', 'Aucune liste avec cet identifiant');
             return $this->redirectToRoute('listing_show');
@@ -35,11 +36,12 @@ class TaskController extends AbstractController {
             $em->flush();
             $this->addFlash('success',"La tâche « $name » a bien été ajoutée");
             return $this->redirectToRoute('listing_show' ,[
-                'listingId' => $listingId
+                'listingId' => $listingId,
             ]);            
         }      
         return $this->render('task.html.twig' , [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'name' => $listingName
             ]);        
     } 
 

@@ -2,6 +2,8 @@
 
 {% block title %} Création d'une tâche {% endblock %}
 
+{% block heading %}CREATION D'UNE TACHE DANS LE LISTING {{ name }}{% endblock %}
+
 {% block body %}
     {{ form_start(form, {'attr' : {'style': 'width:100%;'}}) }}
         {{ form_widget(form) }}
